@@ -1,0 +1,6 @@
+@SPHSS_SOAP_APIService_HostAddress = http://localhost:5119
+
+GET {{SPHSS_SOAP_APIService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

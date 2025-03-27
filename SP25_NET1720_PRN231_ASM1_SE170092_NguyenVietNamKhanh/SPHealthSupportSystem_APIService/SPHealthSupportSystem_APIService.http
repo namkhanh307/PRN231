@@ -1,0 +1,6 @@
+@SPHealthSupportSystem_APIService_HostAddress = http://localhost:5067
+
+GET {{SPHealthSupportSystem_APIService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

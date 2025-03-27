@@ -1,0 +1,407 @@
+﻿@*  @page "/psychologyTheories"
+ @using GraphQL
+ @using GraphQL.Client.Http
+ @using GraphQL.Client.Serializer.SystemTextJson
+ @using System.Net.Http
+ @inject HttpClient Http
+ @inject NavigationManager Navigation
+ @inject IJSRuntime JS
+ @rendermode InteractiveServer
+
+ <h3>Danh sách</h3>
+
+ <!-- Nút "Create" -->
+ <button class="btn btn-primary mb-3" @onclick="CreateOrder">Create</button>
+
+ <!-- Form tạo/chỉnh sửa đơn hàng -->
+ @if (isCreating || isEditing)
+ {
+     <div>
+         <h4>@(isCreating ? "Create" : "Update")</h4>
+         <form>
+             <!-- Thêm trường OrderId -->
+             <div class="form-group">
+                 <label for="Id">Id</label>
+                 <input type="number" class="form-control" id="Id" @bind="editingPsychologyTheory.Id/>
+             </div>
+             <div class="form-group">
+                 <label for="UserId">User ID</label>
+                 <input type="text" class="form-control" id="UserId" @bind="editingPsychologyTheory.UserId" />
+             </div>
+             <div class="form-group">
+                 <label for="PaymentMethod">Payment Method</label>
+                 <input type="text" class="form-control" id="PaymentMethod" @bind="editingPsychologyTheory.PaymentMethod.Name" />
+             </div>
+             <div class="form-group">
+                 <label for="OrderDate">Order Date</label>
+                 <input type="text" class="form-control" id="OrderDate" @bind="editingPsychologyTheory.OrderDate" />
+             </div>
+             <div class="form-group">
+                 <label for="TotalAmount">Total Amount</label>
+                 <input type="text" class="form-control" id="TotalAmount" @bind="editingPsychologyTheory.TotalAmount" />
+             </div>
+             <div class="form-group">
+                 <label for="ShippingAddress">Shipping Address</label>
+                 <input type="text" class="form-control" id="ShippingAddress" @bind="editingPsychologyTheory.ShippingAddress" />
+             </div>
+             <div class="form-group">
+                 <label for="OrderStatus">Order Status</label>
+                 <input type="text" class="form-control" id="OrderStatus" @bind="editingPsychologyTheory.OrderStatus" />
+             </div>
+             <div class="form-group">
+                 <label for="CancelReason">Cancel Reason</label>
+                 <input type="text" class="form-control" id="CancelReason" @bind="editingPsychologyTheory.CancelReason" />
+             </div>
+             <div class="form-group">
+                 <label for="PromoCode">Promo Code</label>
+                 <input type="text" class="form-control" id="PromoCode" @bind="editingOrder.PromoCode" />
+             </div>
+             <div class="form-group">
+                 <label for="PointsUsed">Points Used</label>
+                 <input type="number" class="form-control" id="PointsUsed" @bind="editingOrder.PointsUsed" />
+             </div>
+             <button class="btn btn-primary" @onclick="() => SaveOrder(editingOrder)">Lưu</button>
+             <button class="btn btn-secondary" @onclick="CancelEdit">Hủy</button>
+         </form>
+     </div>
+ }
+
+ <!-- Form xem chi tiết đơn hàng -->
+ @if (isViewing && viewingOrder != null)
+ {
+     <div>
+         <h4>Chi tiết đơn hàng</h4>
+         <form>
+             <div class="form-group">
+                 <label for="OrderId">Order ID</label>
+                 <input type="text" class="form-control" id="OrderId" value="@viewingOrder.OrderId" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="UserId">User ID</label>
+                 <input type="text" class="form-control" id="UserId" value="@viewingOrder.UserId" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="PaymentMethod">Payment Method</label>
+                 <input type="text" class="form-control" id="PaymentMethod" value="@viewingOrder.PaymentMethod?.Name" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="OrderDate">Order Date</label>
+                 <input type="text" class="form-control" id="OrderDate" value="@viewingOrder.OrderDate" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="TotalAmount">Total Amount</label>
+                 <input type="text" class="form-control" id="TotalAmount" value="@viewingOrder.TotalAmount" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="ShippingAddress">Shipping Address</label>
+                 <input type="text" class="form-control" id="ShippingAddress" value="@viewingOrder.ShippingAddress" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="OrderStatus">Order Status</label>
+                 <input type="text" class="form-control" id="OrderStatus" value="@viewingOrder.OrderStatus" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="CancelReason">Cancel Reason</label>
+                 <input type="text" class="form-control" id="CancelReason" value="@viewingOrder.CancelReason" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="PromoCode">Promo Code</label>
+                 <input type="text" class="form-control" id="PromoCode" value="@viewingOrder.PromoCode" readonly />
+             </div>
+             <div class="form-group">
+                 <label for="PointsUsed">Points Used</label>
+                 <input type="number" class="form-control" id="PointsUsed" value="@viewingOrder.PointsUsed" readonly />
+             </div>
+             <button class="btn btn-secondary" @onclick="() => { isViewing = false; viewingOrder = null; }">Đóng</button>
+         </form>
+     </div>
+ }
+
+ <!-- Bảng hiển thị danh sách đơn hàng -->
+ @if (orders == null)
+ {
+     <p>Đang tải dữ liệu...</p>
+ }
+ else
+ {
+     <table class="table">
+         <thead>
+             <tr>
+                 <th>Order ID</th>
+                 <th>User ID</th>
+                 <th>Payment Method</th>
+                 <th>Order Date</th>
+                 <th>Total Amount</th>
+                 <th>Shipping Address</th>
+                 <th>Status</th>
+                 <th>Cancel Reason</th>
+                 <th>Promo Code</th>
+                 <th>Points Used</th>
+                 <th>Hành động</th>
+             </tr>
+         </thead>
+         <tbody>
+             @foreach (var order in orders)
+             {
+                 <tr>
+                     <td>@order.OrderId</td>
+                     <td>@order.UserId</td>
+                     <td>@order.PaymentMethod?.Name</td>
+                     <td>@order.OrderDate</td>
+                     <td>@order.TotalAmount</td>
+                     <td>@order.ShippingAddress</td>
+                     <td>@order.OrderStatus</td>
+                     <td>@order.CancelReason</td>
+                     <td>@order.PromoCode</td>
+                     <td>@order.PointsUsed</td>
+                     <td>
+                         <button class="btn btn-info btn-sm" @onclick="() => ViewDetail(order.OrderId)">Chi tiết</button>
+                         <button class="btn btn-warning btn-sm" @onclick="() => StartEdit(order)">Chỉnh sửa</button>
+                         <button class="btn btn-danger btn-sm" @onclick="() => DeleteOrder(order.OrderId)">Xóa</button>
+                     </td>
+                 </tr>
+             }
+         </tbody>
+     </table>
+ }
+
+ @code {
+     private List<PsychologyTheory> psychologyTheories;
+     private PsychologyTheory editingPsychologyTheory;
+ private PsychologyTheory viewingPsychologyTheory;
+     private bool isCreating = false;
+     private bool isEditing = false;
+     private bool isViewing = false;
+     private readonly GraphQLHttpClient client = new("https://localhost:7202/graphql", new SystemTextJsonSerializer());
+
+ protected override async Task OnInitializedAsync() => await LoadPsychologyTheories();
+
+ private void CreatePsychologyTheory()
+     {
+         isCreating = true;
+         isEditing = false;
+         isViewing = false;
+         editingPsychologyTheory = new PsychologyTheory
+             {
+                 OrderId = 0, // Khởi tạo OrderId
+                 OrderDate = DateTime.Now.ToString("yyyy-MM-dd"),
+                 OrderStatus = "Pending",
+                 PointsUsed = 0,
+                 PaymentMethod = new PaymentMethod() // Khởi tạo PaymentMethod
+             };
+     }
+
+ private void StartEdit(PsychologyTheory psychologyTheory)
+     {
+         isEditing = true;
+         isCreating = false;
+         isViewing = false;
+         editingPsychologyTheory = new PsychologyTheory
+             {
+                 OrderId = order.OrderId,
+                 UserId = order.UserId,
+                 OrderDate = order.OrderDate,
+                 TotalAmount = order.TotalAmount,
+                 ShippingAddress = order.ShippingAddress,
+                 OrderStatus = order.OrderStatus,
+                 PaymentMethod = order.PaymentMethod ?? new PaymentMethod(), // Đảm bảo PaymentMethod không null
+                 CancelReason = order.CancelReason,
+                 PromoCode = order.PromoCode,
+                 PointsUsed = order.PointsUsed
+             };
+     }
+
+     private void CancelEdit()
+     {
+         isCreating = false;
+         isEditing = false;
+         isViewing = false;
+         editingPsychologyTheory = null;
+         viewingPsychologyTheory = null;
+     }
+
+ private async Task SaveOrder(PsychologyTheory updatedPsychologyTheory)
+     {
+         if (isCreating)
+         {
+             await CreateOrderMutation(updatedPsychologyTheory);
+         }
+         else if (isEditing)
+         {
+             await UpdateOrder(updatedPsychologyTheory);
+         }
+         CancelEdit();
+     }
+
+ private async Task CreatePsychologyTheoryMutation(PsychologyTheory newPsychologyTheory)
+     {
+         var mutation = new GraphQLRequest
+             {
+                 Query = @"
+                 mutation CreateOrder($order: OrderInput!) {
+                     createOrder(order: $order) {
+                         orderId
+                         userId
+                         paymentMethodId
+                         orderDate
+                         totalAmount
+                         shippingAddress
+                         orderStatus
+                         cancelReason
+                         promoCode
+                         pointsUsed
+                     }
+                 }",
+                 Variables = new
+                 {
+                     order = new
+                     {
+                         orderId = newOrder.OrderId, // Thêm OrderId vào mutation
+                         userId = newOrder.UserId,
+                         paymentMethodId = newOrder.PaymentMethod?.Name,
+                         orderDate = newOrder.OrderDate,
+                         totalAmount = newOrder.TotalAmount,
+                         shippingAddress = newOrder.ShippingAddress,
+                         orderStatus = newOrder.OrderStatus,
+                         cancelReason = newOrder.CancelReason,
+                         promoCode = newOrder.PromoCode,
+                         pointsUsed = newOrder.PointsUsed
+                     }
+                 }
+             };
+
+         var response = await client.SendMutationAsync<OrderResponse>(mutation);
+         if (response.Data != null)
+         {
+             await LoadOrders();
+         }
+     }
+
+     private async Task UpdateOrder(Order updatedOrder)
+     {
+         var mutation = new GraphQLRequest
+             {
+                 Query = @"
+                 mutation UpdateOrder($id: Int!, $order: OrderInput!) {
+                     updateOrder(id: $id, order: $order) {
+                         orderId
+                         userId
+                         paymentMethodId
+                         orderDate
+                         totalAmount
+                         shippingAddress
+                         orderStatus
+                         cancelReason
+                         promoCode
+                         pointsUsed
+                     }
+                 }",
+                 Variables = new { id = updatedOrder.OrderId, order = updatedOrder }
+             };
+
+         var response = await client.SendMutationAsync<OrderResponse>(mutation);
+         if (response.Data != null)
+         {
+             await LoadOrders();
+         }
+     }
+
+     private async Task LoadOrders()
+     {
+         var query = new GraphQLRequest
+             {
+                 Query = @"query { orders { orderId userId paymentMethod { name } orderDate totalAmount shippingAddress orderStatus cancelReason promoCode pointsUsed } }"
+             };
+
+         var response = await client.SendQueryAsync<PsychologyTheoriesResponse>(query);
+         orders = response.Data?.Orders ?? new List<Order>();
+     }
+
+     private async Task ViewDetail(int orderId)
+     {
+         isViewing = true;
+         isCreating = false;
+         isEditing = false;
+
+         var query = new GraphQLRequest
+             {
+                 Query = @"query Order($id: Int!) {
+                 order(id: $id) {
+                     orderId
+                     userId
+                     paymentMethodId
+                     orderDate
+                     totalAmount
+                     shippingAddress
+                     orderStatus
+                     cancelReason
+                     promoCode
+                     pointsUsed
+                 }
+             }",
+                 Variables = new { id = orderId }
+             };
+
+         var response = await client.SendQueryAsync<OrderDetailResponse>(query);
+         viewingOrder = response.Data?.Order;
+     }
+
+     private async Task<bool> ConfirmDelete(int orderId) => await JS.InvokeAsync<bool>("confirm", $"Bạn có chắc chắn muốn xóa đơn hàng {orderId}?");
+
+     private async Task DeleteOrder(int orderId)
+     {
+         if (!await ConfirmDelete(orderId)) return;
+
+         var mutation = new GraphQLRequest
+             {
+                 Query = @"mutation ($id: Int!) { deleteOrder(id: $id) }",
+                 Variables = new { id = orderId }
+             };
+
+         var response = await client.SendMutationAsync<DeleteOrderResponse>(mutation);
+         if (response.Data?.DeleteOrder == true)
+         {
+             orders.RemoveAll(o => o.OrderId == orderId);
+         }
+     }
+
+     private class PsychologyTheoriesResponse { public List<PsychologyTheory> PsychologyTheories { get; set; } }
+     private class PsychologyTheoryResponse { public int Id { get; set; } }
+     private class DeletePsychologyTheoryReponse { public bool DeletePsychologyTheory { get; set; } }
+     private class PsychologyTheoryDetailResponse { public PsychologyTheory PsychologyTheory { get; set; } }
+     private class PsychologyTheory
+     {
+         public int Id { get; set; }
+
+         public string Name { get; set; }
+
+         public string Description { get; set; }
+
+         public int TopicId { get; set; }
+
+         public string Author { get; set; }
+
+         public int? YearPublished { get; set; }
+
+         public string TheoryType { get; set; }
+
+         public string Principle { get; set; }
+
+         public string Application { get; set; }
+
+         public string RelatedTheory { get; set; }
+
+         public string Criticism { get; set; }
+
+         public DateTime? CreateAt { get; set; }
+
+         public DateTime? UpdateAt { get; set; }
+
+         public virtual Topic Topic { get; set; }
+     }
+
+     private class Topic
+     {
+         public string Name { get; set; }    
+     }
+ } *@

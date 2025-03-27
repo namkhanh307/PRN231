@@ -1,0 +1,6 @@
+@SPHSS_GraghQLAPIService_HostAddress = http://localhost:5212
+
+GET {{SPHSS_GraghQLAPIService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
