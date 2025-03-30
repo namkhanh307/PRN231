@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SPHSSSoapServiceReference
+namespace SOAPServiceReference
 {
     using System.Runtime.Serialization;
     
@@ -38,7 +38,7 @@ namespace SPHSSSoapServiceReference
         
         private string TheoryTypeField;
         
-        private SPHSSSoapServiceReference.Topic TopicField;
+        private SOAPServiceReference.Topic TopicField;
         
         private int TopicIdField;
         
@@ -177,7 +177,7 @@ namespace SPHSSSoapServiceReference
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public SPHSSSoapServiceReference.Topic Topic
+        public SOAPServiceReference.Topic Topic
         {
             get
             {
@@ -239,6 +239,8 @@ namespace SPHSSSoapServiceReference
         
         private string DescriptionField;
         
+        private int IdField;
+        
         private string NameField;
         
         private System.Nullable<System.DateTime> UpdateAtField;
@@ -270,6 +272,19 @@ namespace SPHSSSoapServiceReference
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id
+        {
+            get
+            {
+                return this.IdField;
+            }
+            set
+            {
+                this.IdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name
         {
             get
@@ -297,37 +312,37 @@ namespace SPHSSSoapServiceReference
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SPHSSSoapServiceReference.IPsychologyTheorySoapService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SOAPServiceReference.IPsychologyTheorySoapService")]
     public interface IPsychologyTheorySoapService
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPsychologyTheorySoapService/GetPsychologyTheories", ReplyAction="http://tempuri.org/IPsychologyTheorySoapService/GetPsychologyTheoriesResponse")]
-        System.Threading.Tasks.Task<SPHSSSoapServiceReference.PsychologyTheory[]> GetPsychologyTheoriesAsync();
+        System.Threading.Tasks.Task<SOAPServiceReference.PsychologyTheory[]> GetPsychologyTheoriesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPsychologyTheorySoapService/GetPsychologyTheory", ReplyAction="http://tempuri.org/IPsychologyTheorySoapService/GetPsychologyTheoryResponse")]
-        System.Threading.Tasks.Task<SPHSSSoapServiceReference.PsychologyTheory> GetPsychologyTheoryAsync(int id);
+        System.Threading.Tasks.Task<SOAPServiceReference.PsychologyTheory> GetPsychologyTheoryAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPsychologyTheorySoapService/CreatePsychologyTheory", ReplyAction="http://tempuri.org/IPsychologyTheorySoapService/CreatePsychologyTheoryResponse")]
-        System.Threading.Tasks.Task<int> CreatePsychologyTheoryAsync(SPHSSSoapServiceReference.PsychologyTheory psychologyTheory);
+        System.Threading.Tasks.Task<int> CreatePsychologyTheoryAsync(SOAPServiceReference.PsychologyTheory psychologyTheory);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPsychologyTheorySoapService/UpdatePsychologyTheory", ReplyAction="http://tempuri.org/IPsychologyTheorySoapService/UpdatePsychologyTheoryResponse")]
-        System.Threading.Tasks.Task<int> UpdatePsychologyTheoryAsync(SPHSSSoapServiceReference.PsychologyTheory psychologyTheory);
+        System.Threading.Tasks.Task<int> UpdatePsychologyTheoryAsync(SOAPServiceReference.PsychologyTheory psychologyTheory);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPsychologyTheorySoapService/DeletePsychologyTheory", ReplyAction="http://tempuri.org/IPsychologyTheorySoapService/DeletePsychologyTheoryResponse")]
         System.Threading.Tasks.Task<bool> DeletePsychologyTheoryAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPsychologyTheorySoapService/GetTopics", ReplyAction="http://tempuri.org/IPsychologyTheorySoapService/GetTopicsResponse")]
-        System.Threading.Tasks.Task<SPHSSSoapServiceReference.Topic[]> GetTopicsAsync();
+        System.Threading.Tasks.Task<SOAPServiceReference.Topic[]> GetTopicsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
-    public interface IPsychologyTheorySoapServiceChannel : SPHSSSoapServiceReference.IPsychologyTheorySoapService, System.ServiceModel.IClientChannel
+    public interface IPsychologyTheorySoapServiceChannel : SOAPServiceReference.IPsychologyTheorySoapService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
-    public partial class PsychologyTheorySoapServiceClient : System.ServiceModel.ClientBase<SPHSSSoapServiceReference.IPsychologyTheorySoapService>, SPHSSSoapServiceReference.IPsychologyTheorySoapService
+    public partial class PsychologyTheorySoapServiceClient : System.ServiceModel.ClientBase<SOAPServiceReference.IPsychologyTheorySoapService>, SOAPServiceReference.IPsychologyTheorySoapService
     {
         
         /// <summary>
@@ -370,22 +385,22 @@ namespace SPHSSSoapServiceReference
         {
         }
         
-        public System.Threading.Tasks.Task<SPHSSSoapServiceReference.PsychologyTheory[]> GetPsychologyTheoriesAsync()
+        public System.Threading.Tasks.Task<SOAPServiceReference.PsychologyTheory[]> GetPsychologyTheoriesAsync()
         {
             return base.Channel.GetPsychologyTheoriesAsync();
         }
         
-        public System.Threading.Tasks.Task<SPHSSSoapServiceReference.PsychologyTheory> GetPsychologyTheoryAsync(int id)
+        public System.Threading.Tasks.Task<SOAPServiceReference.PsychologyTheory> GetPsychologyTheoryAsync(int id)
         {
             return base.Channel.GetPsychologyTheoryAsync(id);
         }
         
-        public System.Threading.Tasks.Task<int> CreatePsychologyTheoryAsync(SPHSSSoapServiceReference.PsychologyTheory psychologyTheory)
+        public System.Threading.Tasks.Task<int> CreatePsychologyTheoryAsync(SOAPServiceReference.PsychologyTheory psychologyTheory)
         {
             return base.Channel.CreatePsychologyTheoryAsync(psychologyTheory);
         }
         
-        public System.Threading.Tasks.Task<int> UpdatePsychologyTheoryAsync(SPHSSSoapServiceReference.PsychologyTheory psychologyTheory)
+        public System.Threading.Tasks.Task<int> UpdatePsychologyTheoryAsync(SOAPServiceReference.PsychologyTheory psychologyTheory)
         {
             return base.Channel.UpdatePsychologyTheoryAsync(psychologyTheory);
         }
@@ -395,7 +410,7 @@ namespace SPHSSSoapServiceReference
             return base.Channel.DeletePsychologyTheoryAsync(id);
         }
         
-        public System.Threading.Tasks.Task<SPHSSSoapServiceReference.Topic[]> GetTopicsAsync()
+        public System.Threading.Tasks.Task<SOAPServiceReference.Topic[]> GetTopicsAsync()
         {
             return base.Channel.GetTopicsAsync();
         }

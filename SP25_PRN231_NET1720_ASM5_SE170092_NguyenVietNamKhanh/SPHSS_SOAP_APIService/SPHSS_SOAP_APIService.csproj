@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SPHealthSupportSystem_Repositories\SPHealthSupportSystem_Repositories.csproj" />
     <ProjectReference Include="..\SPHealthSupportSystem_Services\SPHealthSupportSystem_Services.csproj" />
   </ItemGroup>
 

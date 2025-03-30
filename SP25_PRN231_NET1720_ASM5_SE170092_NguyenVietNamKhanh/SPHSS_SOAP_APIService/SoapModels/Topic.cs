@@ -11,6 +11,7 @@ namespace SPHSS_SOAP_APIService.SoapModels;
 public partial class Topic
 {
     [Key]
+    [DataMember]
     public int Id { get; set; }
     [DataMember]
     public string Name { get; set; }
@@ -21,5 +22,4 @@ public partial class Topic
     [DataMember]
     public DateTime? UpdateAt { get; set; }
 
-    public virtual ICollection<PsychologyTheory> PsychologyTheories { get; set; } = new List<PsychologyTheory>();
 }
