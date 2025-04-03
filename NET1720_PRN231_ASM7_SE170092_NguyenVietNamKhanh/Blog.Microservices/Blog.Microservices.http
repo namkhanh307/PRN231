@@ -1,0 +1,6 @@
+@PsychologyTheory.Microservices_HostAddress = http://localhost:5157
+
+GET {{PsychologyTheory.Microservices_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
