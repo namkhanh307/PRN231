@@ -1,0 +1,200 @@
+﻿@page "/psychology-theories"
+@using SPHealthSupportSystem_GraphQL_Client.Models
+@using SPHealthSupportSystem_GraphQL_Client.GraphQLService
+@inject NavigationManager Navigation
+@inject GraphQLService graphQLService
+
+<h3>Quản lý Lý Thuyết Tâm Lý</h3>
+<button class="btn btn-success" @onclick="GoToAddTheoryPage">Thêm Lý Thuyết</button>
+<!-- Hiển thị danh sách -->
+@if (theories == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Mô tả</th>
+                <th>Topic</th>
+                <th>Tác giả</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var theory in theories)
+            {
+                <tr>
+                    <td>@theory.Id</td>
+                    <td>@theory.Name</td>
+                    <td>@theory.Description</td>
+                    <td>@theory.TopicName</td>
+                    <td>@theory.Author</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditTheory(theory)">✏️ Sửa</button>
+                        <button class="btn btn-danger" @onclick="() => ConfirmDelete(theory.Id)">🗑 Xóa</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Popup xác nhận xóa -->
+@if (isConfirmingDelete)
+{
+    <div class="modal" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa</h5>
+                    <button class="close" @onclick="CancelDelete">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa lý thuyết này không?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CancelDelete">Hủy</button>
+                    <button class="btn btn-danger" @onclick="DeleteTheory">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Form Thêm/Sửa -->
+@if (isEditing)
+{
+    <div class="card p-3">
+        <h4>@(editingTheory.Id == 0 ? "Thêm mới" : "Chỉnh sửa") Lý Thuyết</h4>
+
+        <label>Tên:</label>
+        <input class="form-control" @bind="editingTheory.Name" />
+
+        <label>Mô tả:</label>
+        <textarea class="form-control" @bind="editingTheory.Description"></textarea>
+
+        <label>Tác giả:</label>
+        <input class="form-control" @bind="editingTheory.Author" />
+
+        <label>Chọn Topic:</label>
+        <select class="form-control" @bind="editingTheory.TopicId">
+            <option value="">-- Chọn một Topic --</option>
+            @foreach (var topic in topics)
+            {
+                <option value="@topic.Id">@topic.Name</option>
+            }
+        </select>
+
+        <label>Năm xuất bản:</label>
+        <input type="number" class="form-control" @bind="editingTheory.YearPublished" />
+
+        <label>Loại lý thuyết:</label>
+        <input class="form-control" @bind="editingTheory.TheoryType" />
+
+        <label>Nguyên lý:</label>
+        <input class="form-control" @bind="editingTheory.Principle" />
+
+        <label>Ứng dụng:</label>
+        <input class="form-control" @bind="editingTheory.Application" />
+
+        <label>Lý thuyết liên quan:</label>
+        <input class="form-control" @bind="editingTheory.RelatedTheory" />
+
+        <label>Phê bình:</label>
+        <input class="form-control" @bind="editingTheory.Criticism" />
+
+        <button class="btn btn-success mt-2" @onclick="SaveTheory">💾 Lưu</button>
+        <button class="btn btn-secondary mt-2" @onclick="CancelEdit">❌ Hủy</button>
+    </div>
+}
+
+@code {
+    private List<PsychologyTheory> theories;
+    private List<Topic> topics = new List<Topic>();
+    private PsychologyTheory editingTheory = new();
+    private bool isEditing = false;
+    private bool isConfirmingDelete = false;
+    private int theoryIdToDelete = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTheories();
+        await LoadTopics();
+    }
+
+    private async Task LoadTopics()
+    {
+
+        topics = await graphQLService.GetAllTopicsAsync();
+
+    }
+    private async Task LoadTheories()
+    {
+        theories = await graphQLService.GetPsychologyTheoriesAsync();
+    }
+    private void EditTheory(PsychologyTheory theory)
+    {
+        editingTheory = new PsychologyTheory
+            {
+                Id = theory.Id,
+                Name = theory.Name,
+                Description = theory.Description,
+                Author = theory.Author,
+                TopicId = theory.TopicId,
+                YearPublished = theory.YearPublished,
+                TheoryType = theory.TheoryType,
+                Principle = theory.Principle,
+                Application = theory.Application,
+                RelatedTheory = theory.RelatedTheory,
+                Criticism = theory.Criticism
+            };
+        isEditing = true;
+    }
+
+    private void CancelEdit()
+    {
+        isEditing = false;
+        editingTheory = new PsychologyTheory();
+    }
+
+    private async Task SaveTheory()
+    {
+
+        await graphQLService.UpdatePsychologyTheoryAsync(editingTheory);
+
+        await LoadTheories();
+        isEditing = false;
+    }
+
+    private void ConfirmDelete(int id)
+    {
+        theoryIdToDelete = id;
+        isConfirmingDelete = true;
+    }
+
+    private void CancelDelete()
+    {
+        isConfirmingDelete = false;
+        theoryIdToDelete = 0;
+    }
+
+    private async Task DeleteTheory()
+    {
+        if (theoryIdToDelete > 0)
+        {
+            await graphQLService.DeletePsychologyTheoryAsync(theoryIdToDelete);
+            await LoadTheories();
+            isConfirmingDelete = false;
+        }
+    }
+    private void GoToAddTheoryPage()
+    {
+        Navigation.NavigateTo("/add-theory");
+    }
+}

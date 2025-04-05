@@ -5,9 +5,11 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPHealthSupportSystem_gRPCService", "SPHealthSupportSystem_gRPCService\SPHealthSupportSystem_gRPCService.csproj", "{1983758A-4E00-4FE0-BD88-C787F3D4CDFA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPHSS_gRPC_Client", "SPHSS_gRPC_Client\SPHSS_gRPC_Client.csproj", "{7C0F581E-AA32-45CE-9B82-7133677FBF28}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPHealthSupportSystem_MVCWebApp", "SPHealthSupportSystem_MVCWebApp\SPHealthSupportSystem_MVCWebApp.csproj", "{63C924B3-66A7-4B37-8904-B42453F2E6A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPHealthSupportSystem_Repositories", "SPHealthSupportSystem_Repositories\SPHealthSupportSystem_Repositories.csproj", "{EB57248B-252A-4395-8C83-A3711A53BCD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPHealthSupportSystem_Services", "SPHealthSupportSystem_Services\SPHealthSupportSystem_Services.csproj", "{2C0B5498-EB42-4868-A5D5-FCD3043B0D20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +21,18 @@ Global
 		{1983758A-4E00-4FE0-BD88-C787F3D4CDFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1983758A-4E00-4FE0-BD88-C787F3D4CDFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1983758A-4E00-4FE0-BD88-C787F3D4CDFA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C0F581E-AA32-45CE-9B82-7133677FBF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C0F581E-AA32-45CE-9B82-7133677FBF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C0F581E-AA32-45CE-9B82-7133677FBF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C0F581E-AA32-45CE-9B82-7133677FBF28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{63C924B3-66A7-4B37-8904-B42453F2E6A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63C924B3-66A7-4B37-8904-B42453F2E6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63C924B3-66A7-4B37-8904-B42453F2E6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63C924B3-66A7-4B37-8904-B42453F2E6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB57248B-252A-4395-8C83-A3711A53BCD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB57248B-252A-4395-8C83-A3711A53BCD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB57248B-252A-4395-8C83-A3711A53BCD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB57248B-252A-4395-8C83-A3711A53BCD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0B5498-EB42-4868-A5D5-FCD3043B0D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0B5498-EB42-4868-A5D5-FCD3043B0D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0B5498-EB42-4868-A5D5-FCD3043B0D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0B5498-EB42-4868-A5D5-FCD3043B0D20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

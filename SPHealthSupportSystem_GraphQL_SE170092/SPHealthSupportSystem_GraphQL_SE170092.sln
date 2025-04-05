@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPHealthSupportSystem_GraphQL_API", "SPHealthSupportSystem_GraphQL_API\SPHealthSupportSystem_GraphQL_API.csproj", "{ADDD3077-D146-481D-8A9B-320D5C8D4CD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPHealthSupportSystem_Repositories", "SPHealthSupportSystem_Repositories\SPHealthSupportSystem_Repositories.csproj", "{38D4BF5B-606C-06BE-74F6-1C35486528F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPHealthSupportSystem_Services", "SPHealthSupportSystem_Services\SPHealthSupportSystem_Services.csproj", "{9F67E29F-4799-C814-E263-10039A491E01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPHealthSupportSystem_GraphQL_Client", "SPHealthSupportSystem_GraphQL_Client\SPHealthSupportSystem_GraphQL_Client.csproj", "{845A0CB1-67BD-48B9-87E8-700C271576B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADDD3077-D146-481D-8A9B-320D5C8D4CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADDD3077-D146-481D-8A9B-320D5C8D4CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADDD3077-D146-481D-8A9B-320D5C8D4CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADDD3077-D146-481D-8A9B-320D5C8D4CD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D4BF5B-606C-06BE-74F6-1C35486528F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D4BF5B-606C-06BE-74F6-1C35486528F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D4BF5B-606C-06BE-74F6-1C35486528F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D4BF5B-606C-06BE-74F6-1C35486528F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F67E29F-4799-C814-E263-10039A491E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F67E29F-4799-C814-E263-10039A491E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F67E29F-4799-C814-E263-10039A491E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F67E29F-4799-C814-E263-10039A491E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{845A0CB1-67BD-48B9-87E8-700C271576B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{845A0CB1-67BD-48B9-87E8-700C271576B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{845A0CB1-67BD-48B9-87E8-700C271576B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{845A0CB1-67BD-48B9-87E8-700C271576B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17C2D083-CE21-4ACD-86F9-92CE23F005A5}
+	EndGlobalSection
+EndGlobal

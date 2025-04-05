@@ -1,0 +1,6 @@
+@SPHealthSupportSystem_GraphQL_API_HostAddress = http://localhost:5196
+
+GET {{SPHealthSupportSystem_GraphQL_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
